@@ -102,6 +102,7 @@ struct Player:
     member address : felt 
     member username : felt 
     member total_winnings : Uint256
+    member amount_donated : Uint256
 end 
 
 ###  
@@ -383,7 +384,8 @@ func create_player_accounts{
     let player = Player(
         address=account,
         username=username,
-        total_winnings=Uint256(0,0)
+        total_winnings=Uint256(0,0),
+        amount_donated=Uint256(0,0)
     )
 
     # write the player to storage
@@ -499,6 +501,47 @@ end
 ### HELPERS 
 ### 
 
+@external 
+func send_to_charity{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr,
+    }(
+        charity_address : felt,
+        donation : Uint256,
+        donor_address : felt):
+    alloc_locals 
+
+    Ownable_only_owner()
+
+    let (self_contract_address) = get_contract_address()
+    let (token_address) = token_address_storage.read()
+    let (contract_balance : Uint256) = IERC20.balanceOf(contract_address=token_address, account=self_contract_address)
+    with_attr error_message("Not enough money to pay the charity, shame on you"):
+        assert_lt(donation.low, contract_balance.low)
+    end 
+
+    IERC20.transferFrom(contract_address=charity_address, 
+        sender=self_contract_address,
+        recipient=charity_address,
+        amount=donation)
+
+    # update user donations
+
+    let (player : Player) = players.read(donor_address)
+    let (new_amount_donated) = uint256_checked_add(player.amount_donated, donation)
+    let new_player : Player = Player(
+        address=player.address,
+        username=player.username,
+        total_winnings=player.total_winnings,
+        amount_donated=new_amount_donated
+    )
+
+    players.write(donor_address, value=new_player)
+
+    return ()
+end 
+
 #will take an array of winners and an array of rewards and send the tokens 
 @external 
 func reward_tokens{
@@ -545,7 +588,8 @@ func reward_tokens{
     local updated_player : Player = Player(
         address=room.winner_address,
         username=player.username,
-        total_winnings=total_win
+        total_winnings=total_win,
+        amount_donated=Uint256(0, 0)
     )
 
     players.write(room.winner_address, updated_player)
