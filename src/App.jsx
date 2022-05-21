@@ -3,6 +3,7 @@ import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
 import ReactGA from 'react-ga';
+import { StarknetProvider, InjectedConnector } from '@starknet-react/core'
 
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
@@ -32,6 +33,7 @@ const App = () => {
   }, [location]);
 
   return (
+    <StarknetProvider connectors={[new InjectedConnector()]}>
     <ScrollReveal
       ref={childRef}
       children={() => (
@@ -39,6 +41,7 @@ const App = () => {
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
         </Switch>
       )} />
+    </StarknetProvider>
   );
 }
 
