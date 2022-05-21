@@ -141,10 +141,6 @@
             {
                 "name": "token_address",
                 "type": "felt"
-            },
-            {
-                "name": "nft_address",
-                "type": "felt"
             }
         ],
         "name": "constructor",

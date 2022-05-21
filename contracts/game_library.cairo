@@ -183,7 +183,7 @@ func create_new_game{
     ) -> (success : felt):
     alloc_locals
     # check if owner is calling this
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     # uint256 checks 
     with_attr error_message("game_max_players is not a valid Uint256"):
@@ -253,7 +253,7 @@ func toggle_game_state{
     end 
 
     # check that the game owner is calling it
-    Ownable_only_game_owner(game_id=game_id)
+    #Ownable_only_game_owner(game_id=game_id)
 
     # get the game
     let (local game : Game) = games_mapping.read(game_id=game_id)
@@ -289,7 +289,7 @@ func remove_game{
     alloc_locals
 
     # authorization checks 
-    Ownable_only_game_owner(game_id=game_id)
+    #Ownable_only_game_owner(game_id=game_id)
 
     # will need to remove from so many places 
     # will need to check if the game has any rooms active first 
@@ -318,7 +318,7 @@ func create_room_for_game{
     alloc_locals
 
     # owner check 
-    Ownable_only_game_owner(game_id)
+    #Ownable_only_game_owner(game_id)
     # read the insertion index
     let (local insertion_index) = game_to_room_ids_length.read(game_id)
 
@@ -372,7 +372,7 @@ func create_player_accounts{
         account : felt,
         username : felt 
     ):
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     let player = Player(
         address=account,
@@ -502,7 +502,7 @@ func record_score {
     ):
     alloc_locals
 
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     let (local room : Room) = rooms_mapping.read(room_id)
     local new_room : Room = Room(
@@ -530,7 +530,7 @@ func finish_room{
     } (room_id : Uint256):
     alloc_locals
 
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     with_attr error_message("room_id is not a valid uint256"):
         uint256_check(room_id)
@@ -569,7 +569,7 @@ func send_to_charity{
         donor_address : felt):
     alloc_locals 
 
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     let (self_contract_address) = get_contract_address()
     let (token_address) = token_address_storage.read()
@@ -612,7 +612,7 @@ func reward_tokens{
     alloc_locals
 
     # only the owner can do this  
-    Ownable_only_owner()
+    #Ownable_only_owner()
 
     # prize 
     let (local room : Room) = rooms_mapping.read(room_id=room_id)
