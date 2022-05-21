@@ -304,6 +304,36 @@
     {
         "inputs": [
             {
+                "name": "player_account",
+                "type": "felt"
+            },
+            {
+                "name": "score",
+                "type": "Uint256"
+            },
+            {
+                "name": "room_id",
+                "type": "Uint256"
+            }
+        ],
+        "name": "record_score",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "room_id",
+                "type": "Uint256"
+            }
+        ],
+        "name": "finish_room",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "name": "charity_address",
                 "type": "felt"
             },

@@ -38,8 +38,6 @@ from openzeppelin.security.safemath import (
 # ERC20 Stuff 
 from openzeppelin.token.erc20.interfaces.IERC20 import IERC20 
 
-from openzeppelin.token.erc721.interfaces.IERC721 import IERC721 
-
 # The constructor 
 @constructor
 func constructor{
@@ -49,7 +47,6 @@ func constructor{
     }(
         owner: felt,
         token_address : felt,
-        nft_address : felt
     ):
     with_attr error_message("Owner cannot be the zero address"):
         assert_not_zero(owner)
@@ -59,15 +56,11 @@ func constructor{
         assert_not_zero(token_address)
     end 
 
-    with_attr error_message("NFT Address cannot be the zero address"):
-        assert_not_zero(nft_address)
-    end 
     # set the owner of the contract
     Ownable_initializer(owner)
     # write the token address to storage 
     token_address_storage.write(token_address)
-    # write the erc721 address to storage 
-    nft_address_storage.write(nft_address)
+
     return ()
 end
 
@@ -497,6 +490,70 @@ func start_room{
     return (1)
 end     
 
+@external 
+func record_score { 
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr,
+    } (
+        player_account : felt, 
+        score : Uint256, 
+        room_id : Uint256 
+    ):
+    alloc_locals
+
+    Ownable_only_owner()
+
+    let (local room : Room) = rooms_mapping.read(room_id)
+    local new_room : Room = Room(
+            prize=room.prize,
+            entry_price=room.entry_price,
+            game_name=room.game_name,
+            winner_address=player_account,
+            high_score=score,
+            start_time=room.start_time,
+            current_number_of_players=room.current_number_of_players,
+            has_started=0
+    )
+
+    rooms_mapping.write(room_id, value=new_room)
+
+    return () 
+end 
+
+# called by the owner 
+@external 
+func finish_room{ 
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr,
+    } (room_id : Uint256):
+    alloc_locals
+
+    Ownable_only_owner()
+
+    with_attr error_message("room_id is not a valid uint256"):
+        uint256_check(room_id)
+    end 
+
+    let (local room : Room) = rooms_mapping.read(room_id)
+    local new_room : Room = Room(
+            prize=room.prize,
+            entry_price=room.entry_price,
+            game_name=room.game_name,
+            winner_address=room.winner_address,
+            high_score=room.high_score,
+            start_time=room.start_time,
+            current_number_of_players=room.current_number_of_players,
+            has_started=0
+    )
+
+    rooms_mapping.write(room_id, value=new_room)
+
+    return () 
+
+end 
+
 ### 
 ### HELPERS 
 ### 
@@ -601,25 +658,6 @@ func reward_tokens{
     return ()
 
 end 
-
-# # charity NFT 
-# @external
-# func reward_nft{
-#         syscall_ptr: felt*,
-#         pedersen_ptr: HashBuiltin*,
-#         range_check_ptr,
-#     } (
-#     destination : felt,
-#     game_id : Uint256
-#     ):
-#     # the game owner 
-#     Ownable_only_owner()
-
-#     let (nft_address) = nft_address_storage.read()
-#     # get last token ID 
-#     let (last_token_id : Uint256) = IERC721.
-#     IERC721(nft_address).mint(destination
-# end 
 
 # internal function to calculate the rewards based on the total amout paid 
 # 90% winner 10% house
