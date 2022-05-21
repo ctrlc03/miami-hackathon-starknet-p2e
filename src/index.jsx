@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
-// import { StarknetProvider, InjectedConnector } from '@starknet-react/core'
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -13,11 +12,9 @@ import './assets/scss/style.scss';
 const history = createBrowserHistory();
 
 ReactDOM.render(
-  // <StarknetProvider connectors={[new InjectedConnector()]}>
   <Router history={history}>
     <App />
   </Router>,
-  // </StarknetProvider>,
   document.getElementById('root')
 );
 
