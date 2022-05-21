@@ -4,6 +4,8 @@ import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import { useStarknet, InjectedConnector } from '@starknet-react/core'
+import SendCharity from '../../components/functions/SendCharity'; 
+
 
 const propTypes = {
   ...SectionProps.types
@@ -49,7 +51,8 @@ const Hero = ({
     bottomDivider && 'has-bottom-divider'
   );
 
-  const { connect, connectors } = useStarknet()
+  const { connect, connectors, account } = useStarknet()
+  // const { account } = useStarknet()
   const injected = useMemo(() => new InjectedConnector(), [])
 
   return (
@@ -76,21 +79,21 @@ const Hero = ({
                     </Button>
                     ) : null
                     )}
-                  
                   {/* {!active ? (
-                  <Button
-                  tag="a"  
-                  wideMobile
-                  color="dark"
-                  target="_blank"
-                  round
-                  onClick={onOpen}
-                  >Connect to EVM Wallet
-                  </Button>
-                  ) : (
-                    <Button onClick={disconnect}>Disconnect</Button>
+                    <Button
+                    tag="a"  
+                    wideMobile
+                    color="dark"
+                    target="_blank"
+                    round
+                    onClick={onOpen}
+                    >Connect to EVM Wallet
+                    </Button>
+                    ) : (
+                      <Button onClick={disconnect}>Disconnect</Button>
                   )} */}
-
+                  {account}
+                  {/* <SendCharity /> */}
                 </ButtonGroup>
               </div>
             </div>

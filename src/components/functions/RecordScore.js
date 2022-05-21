@@ -1,6 +1,6 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import React from 'react'
-import { useGameContract } from '~/hooks/gameLib'
+import { useGameContract } from '../../hooks/gameLib'
 import { shortStringToFelt } from "../../commons/converters"
 
 export function RecordScore() {
