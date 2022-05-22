@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
-import { useStarknet, InjectedConnector } from '@starknet-react/core'
-import SendCharity from '../../components/functions/SendCharity'; 
+// import { useStarknet, InjectedConnector } from '@starknet-react/core'
+// import SendCharity from '../../components/functions/SendCharity'; 
 
 
 const propTypes = {
@@ -51,9 +51,9 @@ const Hero = ({
     bottomDivider && 'has-bottom-divider'
   );
 
-  const { connect, connectors, account } = useStarknet()
+  // const { connect, connectors, account } = useStarknet()
   // const { account } = useStarknet()
-  const injected = useMemo(() => new InjectedConnector(), [])
+  // const injected = useMemo(() => new InjectedConnector(), [])
 
   return (
     <section
@@ -72,13 +72,13 @@ const Hero = ({
                 </p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                {connectors.map((connector) =>
+                {/* {connectors.map((connector) =>
                 connector.available() ? (
                   <Button tag="a" color="primary" wideMobile key={connector.id} onClick={() => connect(connector)}>
                     Connect {connector.name}                    
                     </Button>
                     ) : null
-                    )}
+                    )} */}
                   {/* {!active ? (
                     <Button
                     tag="a"  
@@ -92,7 +92,7 @@ const Hero = ({
                     ) : (
                       <Button onClick={disconnect}>Disconnect</Button>
                   )} */}
-                  {account}
+                  {/* {account} */}
                   {/* <SendCharity /> */}
                 </ButtonGroup>
               </div>

@@ -262,21 +262,21 @@ const Header = ({
                       <Link to="#0" onClick={closeMenu}>Leaderboard</Link>
                     </li>
                   </ul>
-                  <HStack>
+                  {/* <HStack>
                     {!account ? (
                       <Button onClick={connectWallet}>Connect Wallet</Button>
                     ) : (
                       <Button onClick={disconnect}>Disconnect</Button>
                     )}
-                  </HStack>
-                  {/* {!hideSignin &&
+                  </HStack> */}
+                  {!hideSignin &&
                     <ul
                       className="list-reset header-nav-right"
                     >
                       <li>
-                        <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Coinbase Wallet</Link>
+                        <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={connectWallet}>Coinbase Wallet</Link>
                       </li>
-                    </ul>} */}
+                    </ul>}
                 </div>
               </nav>
             </>}
