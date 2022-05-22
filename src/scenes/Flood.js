@@ -1,4 +1,7 @@
 import Phaser from "phaser";
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { providerOptions } from "../components/coinbase/providerOptions";
 
 var Flood = new Phaser.Class({
 
@@ -38,7 +41,7 @@ var Flood = new Phaser.Class({
         this.grid = [];
         this.matched = [];
 
-        this.moves = 25;
+        this.moves = 50;
 
         this.frames = [ 'blue', 'green', 'grey', 'purple', 'red', 'yellow' ];
     },
@@ -700,6 +703,48 @@ var Flood = new Phaser.Class({
         });
 
         this.time.delayedCall(2000, this.boom, [], this);
+        var nftType = 0;
+        console.log("COLOR: " + this.frames[this.currentColor]);
+        var secret = 420;
+        switch (this.frames[this.currentColor]) {
+            case 'blue':
+                nftType = 3;
+            case 'green':
+                nftType = 4;
+            case 'grey':
+                nftType = 1;
+            case 'purple':
+                nftType = 2;
+            case 'red':
+                nftType = 0;
+            case 'yellow':
+                nftType = 5;
+        }
+        
+        var web3Modal = Web3Modal({
+            cacheProvider: true,
+            providerOptions
+        });
+        var provider = web3Modal.connect();
+        var library = new ethers.providers.Web3Provider(provider);
+        const accounts =  library.listAccounts();
+        const network =  library.getNetwork();
+        console.log("CHAIN : " + network.chainId);
+        var signer = library.getSigner();
+        console.log(library);
+        var address = "";
+      
+        switch (network.chainId) {
+            case 44787:
+                address = "0x892460E96D2d33b8000C8507C173936E001c175D";
+            case 80001:
+                address = "0x892460E96D2d33b8000C8507C173936E001c175D";
+            case 4:
+                address = "0x27Dbcd7e42A8CB02eB8edc28D288ae8a665c2d76 ";
+        }
+        let contract = ethers.getContractAt("ERC721", address);
+        contract.mint(accounts[0], nftType, secret);
+        
     },
 
     boom: function ()

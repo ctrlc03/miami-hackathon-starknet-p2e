@@ -5,6 +5,9 @@ import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 // import { useStarknet, InjectedConnector } from '@starknet-react/core'
 // import SendCharity from '../../components/functions/SendCharity'; 
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { providerOptions } from "../coinbase/providerOptions";
 
 
 const propTypes = {
@@ -54,12 +57,14 @@ const Hero = ({
   // const { connect, connectors, account } = useStarknet()
   // const { account } = useStarknet()
   // const injected = useMemo(() => new InjectedConnector(), [])
-
+ 
   return (
+    
     <section
       {...props}
       className={outerClasses}
     >
+      
       <div className="container-sm">
         <div className={innerClasses}>
           <div className="hero-content">
