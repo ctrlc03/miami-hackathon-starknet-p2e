@@ -55,7 +55,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, Ownable {
         _setTokenURI(1, "https://link.us1.storjshare.io/s/jxfzcgldmwcwt6gggj4oe6ct5euq/demo-bucket/Top_Donor.png");
     }
 
-    function mint(address to_, uint256 species) external onlyOwner {
+    function mint(address to_, uint256 species, uint256 secret) external {
+        require(secret == 420); // I know :shrug: ideally it would be onlyOwner but hey 
         _safeMint(to_, counter);
         if (species == 0) {
             _setTokenURI(counter, "https://link.us1.storjshare.io/jut4odv6h3tj2ezwmiluglh3vi5q/demo-bucket%2FTransport.png");
