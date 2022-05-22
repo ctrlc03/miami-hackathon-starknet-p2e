@@ -4,11 +4,9 @@ require("@nomiclabs/hardhat-waffle");
 const main = async () => {
 
     const [deployer] = await hre.ethers.getSigners();
-    const accountBalance = await deployer.getBalance();
-    console.log("Balance " + accountBalance);
 
-    const luckyContractFactory = await hre.ethers.getContractAt("ERC721", "0xCb03c359022d8ce8619a2DbeAa73e9e802049F90");
-    await luckyContractFactory.mint("0xf4A044ba3FE1372628008b6C83950f07049030d2", 0);
+    const WinnerNFTContractFactory = await hre.ethers.getContractAt("ERC721", process.argv[2]);
+    await WinnerNFTContractFactory.mint(process.argv[3], process.argv[4]);
 }   
 const runMain = async () => {
     try {

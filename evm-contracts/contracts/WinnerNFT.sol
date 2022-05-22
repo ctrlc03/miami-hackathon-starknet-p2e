@@ -145,6 +145,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, Ownable {
             return string(abi.encodePacked(base, _tokenURI));
         }
 
+        return _tokenURIs[tokenId];
+
     }
 
     /**

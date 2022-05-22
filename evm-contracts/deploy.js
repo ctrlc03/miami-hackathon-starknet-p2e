@@ -11,16 +11,22 @@ const main = async () => {
     console.log('Account balance: ', accountBalance.toString());
   
     // read contract file
-    const luckyContractFactory = await hre.ethers.getContractFactory(
+    const WinnerNFTFactory = await hre.ethers.getContractFactory(
       'ERC721'
     );
+    const superWinnerNFTFactory = await hre.ethers.getContractFactory(
+        'WERC721'
+    );
     // triggers deployment
-    const luckyContract = await luckyContractFactory.deploy("SuperWinnerNFT","SWMFT");
+    const SuperWinnerNFT = await superWinnerNFTFactory.deploy("SuperWinnerNFT","SWMFT");
+    const WinnerNFT = await WinnerNFTFactory.deploy("WinnerNFT", "WNFT");
   
     // wait for deployment to finish
-    await luckyContract.deployed();
-  
-    console.log('LuckyNumber contract address: ', luckyContract.address);
+    await SuperWinnerNFT.deployed();
+    await WinnerNFT.deployed();
+
+    console.log('SuperWinnerNFT contract address: ', SuperWinnerNFT.address);
+    console.log('WinnerNFT contract address: ', WinnerNFT.address)
   };
   
   const runMain = async () => {
