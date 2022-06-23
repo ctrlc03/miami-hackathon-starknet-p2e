@@ -1,5 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+evm-contracts/node_modules
+evm-contracts/artifacts
+evm-contracts/cache
+node_modules
+goerli.deployments.txt
+goerli.accounts.json
+127.0.0.1.accounts.json
+node.json
+artifacts
+build 
+
 # dependencies
 /node_modules
 /.pnp
