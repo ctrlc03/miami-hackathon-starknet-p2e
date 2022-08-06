@@ -1,4 +1,4 @@
-# PLAY 2 HELP - GameFi infrastructure enabling games 4 good!
+# PLAY 2 HELP - GameFi infrastructure enabling games 4 good! (Winner of the StarkNet track)
 
 ## THE CHALLENGE
 
